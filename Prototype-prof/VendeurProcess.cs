@@ -4,8 +4,8 @@ public class VendeurProcess
 {
   static void Main(string[] args)
   {
-    Vendeur seller = Vendeur.Instance();
-    seller.sellTobacco();
+    Vendeur seller = Vendeur.Instance(new List<string>{"jojo"});
+    seller.sellTobaccoTo("jojo");
 
   }
 }
