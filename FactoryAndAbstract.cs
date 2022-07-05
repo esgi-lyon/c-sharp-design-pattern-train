@@ -9,11 +9,13 @@ public interface IBluetooth
     string Name { get; }
 }
 
-class V4Bluetooth: IBluetooth {
+class V4Bluetooth : IBluetooth
+{
     public string Name { get; } = "v4Bluetooth";
 }
 
-class V3Bluetooth: IBluetooth {
+class V3Bluetooth : IBluetooth
+{
     public string Name { get; } = "v3Bluetooth";
 }
 
@@ -26,7 +28,7 @@ public class Automobile
     protected IBluetooth bluetoothSystem;
 
     public Automobile(
-     string model,
+      string model,
       string color,
       string space,
       double power,
@@ -39,7 +41,6 @@ public class Automobile
         this.bluetoothSystem = bluetoothSystem;
     }
 }
-
 
 class ElectricCarBluetoothFactory : IAutomobileSpecFactory
 {
@@ -61,7 +62,8 @@ class SportCarBluetoothFactory : IAutomobileSpecFactory
 // factory method using abstract factory
 class AutomobileFactory
 {
-    public Automobile create(string model, double power, string color, string space, IAutomobileSpecFactory bluetoothFactory) {
+    public Automobile create(string model, double power, string color, string space, IAutomobileSpecFactory bluetoothFactory)
+    {
         return new Automobile(model, color, space, power, bluetoothFactory.createBluetoothSystem());
     }
 }
