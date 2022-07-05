@@ -58,7 +58,7 @@ class SportCarBluetoothFactory : IAutomobileSpecFactory
     }
 }
 
-
+// factory method using abstract factory
 class AutomobileFactory
 {
     public Automobile create(string model, double power, string color, string space, IAutomobileSpecFactory bluetoothFactory) {
