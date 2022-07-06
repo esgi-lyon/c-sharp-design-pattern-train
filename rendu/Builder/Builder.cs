@@ -1,58 +1,72 @@
-class NetworkConfiguration {
-    string host;
+namespace NetworkBuilders
+{
 
-    int port;
-
-    public NetworkConfiguration(string host, int port)
+    class NetworkConfiguration
     {
-       this.host = host;
-       this.port = port;
-    }
-}
+        string host;
 
+        int port;
 
-abstract class AbstractNetworkConfigurationBuilder {
-    protected int port {get; set;}
-
-    public abstract AbstractNetworkConfigurationBuilder configureHost(string host);
-    
-    AbstractNetworkConfigurationBuilder configurePort(int port) {
-        this.port = port;
-
-        return this;
-    }
-}
-
-class HttpConfigurationBuilder : AbstractNetworkConfigurationBuilder {
-    string? host;
-
-
-    public override HttpConfigurationBuilder configureHost(string host) {
-        if (!host.Contains("http")) throw new Exception("Not a valid host" + host);
-
-        this.host = host;
-
-        return this;
+        public NetworkConfiguration(string host, int port)
+        {
+            this.host = host;
+            this.port = port;
+        }
     }
 
-    NetworkConfiguration build() {
-        return new NetworkConfiguration(this.host!, this.port);
-    }
-}
 
-class SshConfigurationBuilder : AbstractNetworkConfigurationBuilder {
-    string? host;
+    abstract class AbstractNetworkConfigurationBuilder
+    {
+        protected int port { get; set; }
 
+        public abstract AbstractNetworkConfigurationBuilder configureHost(string host);
 
-    public override SshConfigurationBuilder configureHost(string host) {
-        if (!host.Contains("ssh")) throw new Exception("Not a valid host" + host);
+        AbstractNetworkConfigurationBuilder configurePort(int port)
+        {
+            this.port = port;
 
-        this.host = host;
-
-        return this;
+            return this;
+        }
     }
 
-    NetworkConfiguration build() {
-        return new NetworkConfiguration(this.host!, this.port);
+    class HttpConfigurationBuilder : AbstractNetworkConfigurationBuilder
+    {
+        string? host;
+
+
+        public override HttpConfigurationBuilder configureHost(string host)
+        {
+            if (!host.Contains("http")) throw new Exception("Not a valid host" + host);
+
+            this.host = host;
+
+            return this;
+        }
+
+        NetworkConfiguration build()
+        {
+            return new NetworkConfiguration(this.host!, this.port);
+        }
     }
+
+    class SshConfigurationBuilder : AbstractNetworkConfigurationBuilder
+    {
+        string? host;
+
+
+        public override SshConfigurationBuilder configureHost(string host)
+        {
+            if (!host.Contains("ssh")) throw new Exception("Not a valid host" + host);
+
+            this.host = host;
+
+            return this;
+        }
+
+        NetworkConfiguration build()
+        {
+            return new NetworkConfiguration(this.host!, this.port);
+        }
+    }
+
 }
