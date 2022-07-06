@@ -12,25 +12,32 @@ namespace NetworkBuilders
             this.host = host;
             this.port = port;
         }
+
+
+        public string url() {
+            return host + ":" + port;
+        }
     }
 
 
     abstract class AbstractNetworkConfigurationBuilder
     {
-        protected int port { get; set; }
+        protected int? port { get; set; }
 
         public abstract AbstractNetworkConfigurationBuilder configureHost(string host);
 
-        AbstractNetworkConfigurationBuilder configurePort(int port)
-        {
-            this.port = port;
+        public abstract NetworkConfiguration build();
 
-            return this;
-        }
+        /// Configure ssh port
+        /// should has default in concrete builder
+        // need to be called from build method
+        public abstract AbstractNetworkConfigurationBuilder configurePort(int? port);
     }
 
     class HttpConfigurationBuilder : AbstractNetworkConfigurationBuilder
     {
+        
+        const int DefaultHttpPort = 80;
         string? host;
 
 
@@ -43,14 +50,22 @@ namespace NetworkBuilders
             return this;
         }
 
-        NetworkConfiguration build()
+        public override HttpConfigurationBuilder configurePort(int? port) {
+            this.port = port ?? DefaultHttpPort;
+
+            return this;
+        }
+
+        public override NetworkConfiguration build()
         {
-            return new NetworkConfiguration(this.host!, this.port);
+            return new NetworkConfiguration(this.host!, this.port ?? DefaultHttpPort);
         }
     }
 
     class SshConfigurationBuilder : AbstractNetworkConfigurationBuilder
     {
+        const int DefaultSshPort = 22;
+        
         string? host;
 
 
@@ -63,10 +78,15 @@ namespace NetworkBuilders
             return this;
         }
 
-        NetworkConfiguration build()
+        public override SshConfigurationBuilder configurePort(int? port) {
+            this.port = port ?? DefaultSshPort;
+
+            return this;
+        }
+
+        public override NetworkConfiguration build()
         {
-            return new NetworkConfiguration(this.host!, this.port);
+            return new NetworkConfiguration(this.host!, this.port ?? DefaultSshPort);
         }
     }
-
 }
