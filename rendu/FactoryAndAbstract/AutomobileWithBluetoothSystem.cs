@@ -1,5 +1,6 @@
 ﻿
-namespace AutomobileWithBluetoothSystem {
+namespace AutomobileWithBluetoothSystem
+{
 
     public interface IAutomobileSpecFactory
     {
@@ -9,18 +10,28 @@ namespace AutomobileWithBluetoothSystem {
     public interface IBluetooth
     {
         string Name { get; }
-        // Could imagine properties of bluetooth
+
+        public IDictionary<string, string> Properties {get;}
     }
 
     class V4Bluetooth : IBluetooth
     {
         public string Name { get; } = "v4Bluetooth";
-        // Could imagine properties of bluetooth
+
+        public IDictionary<string, string> Properties {get;} = new Dictionary<string, string>{
+                {"gatt", "1234567891"},
+                {"speed", "1mbs"}
+        };
     }
 
     class V3Bluetooth : IBluetooth
     {
         public string Name { get; } = "v3Bluetooth";
+
+        public IDictionary<string, string> Properties { get; } = new Dictionary<string, string>{
+                {"gatt", "0000011111"},
+                {"speed", "0.5mbs"}
+        };
     }
 
     public class Automobile
@@ -37,7 +48,8 @@ namespace AutomobileWithBluetoothSystem {
         string space,
         double power,
         IBluetooth bluetoothSystem
-        ) {
+        )
+        {
             this.model = model;
             this.color = color;
             this.space = space;
@@ -45,13 +57,14 @@ namespace AutomobileWithBluetoothSystem {
             this.bluetoothSystem = bluetoothSystem;
         }
 
-        public override string? ToString() {
-            return "{" + 
-                this.model + 
-                this.color + 
-                this.space + 
-                this.power + 
-                this.bluetoothSystem.Name + 
+        public override string? ToString()
+        {
+            return "{" +
+                this.model +
+                this.color +
+                this.space +
+                this.power +
+                this.bluetoothSystem.Name +
             "}";
         }
     }
@@ -73,10 +86,9 @@ namespace AutomobileWithBluetoothSystem {
         }
     }
 
-    // factory method using an abstract factory
-    public class AutomobileFactory
+    public class AutomobileFactoryMethod
     {
-        public Automobile create(string model, double power, string color, string space, IAutomobileSpecFactory bluetoothFactory)
+        public static Automobile create(string model, double power, string color, string space, IAutomobileSpecFactory bluetoothFactory)
         {
             return new Automobile(model, color, space, power, bluetoothFactory.createBluetoothSystem());
         }

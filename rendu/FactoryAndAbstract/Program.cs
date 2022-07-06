@@ -1,11 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-namespace AutomobileWithBluetoothSystem
+﻿namespace AutomobileWithBluetoothSystem
 {
 
     class Program {
         public static void Main(string[] args)
         {
-            var mercedesAmg = new AutomobileFactory()
+            var mercedesAmg = AutomobileFactoryMethod
                 .create(
                     "amg",
                     100D,
@@ -15,6 +14,17 @@ namespace AutomobileWithBluetoothSystem
                 );
 
             Console.WriteLine(mercedesAmg);
+
+            var prius = AutomobileFactoryMethod
+                .create(
+                    "prius",
+                    10D,
+                    "#83AAE3",
+                    "",
+                    new ElectricCarBluetoothFactory()
+                );
+
+            Console.WriteLine(prius);
         }
     }
 }
