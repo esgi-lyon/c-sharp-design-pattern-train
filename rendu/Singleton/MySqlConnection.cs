@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 namespace Singleton {
 
     public sealed class MySqlConnection
@@ -27,7 +29,6 @@ namespace Singleton {
 
         string url() {
             return MYSQL_PREFIX + 
-                "//" + 
                 this.user +
                 ":" +
                 this.password +
@@ -42,9 +43,13 @@ namespace Singleton {
         public Dictionary<string, Object> runQuery(string query) {
             if (!opened) throw new Exception("Db is closed");
 
+            if (locked) throw new Exception("Someone is already using connection");
+
             locked = true;
 
             Console.WriteLine("running query to " + url());
+
+           Thread.Sleep(5000);
 
             var result = new Dictionary<string, Object>(){
                 {"a", "true"},
