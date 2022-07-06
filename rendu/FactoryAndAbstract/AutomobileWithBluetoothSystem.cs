@@ -1,5 +1,5 @@
 ﻿
-namespace AbstractFactory {
+namespace AutomobileWithBluetoothSystem {
 
     public interface IAutomobileSpecFactory
     {
@@ -73,7 +73,7 @@ namespace AbstractFactory {
         }
     }
 
-    // factory method using abstract factory
+    // factory method using an abstract factory
     public class AutomobileFactory
     {
         public Automobile create(string model, double power, string color, string space, IAutomobileSpecFactory bluetoothFactory)
